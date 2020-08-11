@@ -66,10 +66,12 @@
         android:layout_alignParentLeft="true"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        fab:fab_addButtonColorNormal="@color/white"
-        fab:fab_addButtonColorPressed="@color/white_pressed"
-        fab:fab_addButtonPlusIconColor="@color/half_black"
-        fab:fab_addButtonSize="mini"
+        fab:fab_buttonColorNormal="@color/white"
+        fab:fab_buttonColorPressed="@color/half_black"
+        fab:fab_buttonIcon="@drawable/ic_baseline_menu_24"
+        fab:fab_buttonSize="mini"
+        fab:fab_buttonStrokeVisible="false"
+        fab:fab_expandRotation="180"
         fab:fab_labelStyle="@style/menu_labels_style"
         fab:fab_labelsPosition="right">
 
@@ -102,9 +104,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        fab:fab_addButtonColorNormal="@color/white"
-        fab:fab_addButtonColorPressed="@color/white_pressed"
-        fab:fab_addButtonPlusIconColor="@color/half_black"
+        fab:fab_buttonColorNormal="@color/white"
+        fab:fab_buttonColorPressed="@color/white_pressed"
         fab:fab_labelStyle="@style/menu_labels_style">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -137,10 +138,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        fab:fab_addButtonColorNormal="@color/white"
-        fab:fab_addButtonColorPressed="@color/white_pressed"
-        fab:fab_addButtonPlusIconColor="@color/half_black"
-        fab:fab_addButtonSize="mini"
+        fab:fab_buttonColorNormal="@color/white"
+        fab:fab_buttonColorPressed="@color/white_pressed"
+        fab:fab_buttonSize="mini"
         fab:fab_expandDirection="down"
         fab:fab_labelStyle="@style/menu_labels_style">
 
@@ -186,11 +186,10 @@
         android:layout_marginRight="16dp"
         android:layout_toStartOf="@+id/multiple_actions_down"
         android:layout_toLeftOf="@+id/multiple_actions_down"
-        fab:fab_addButtonColorNormal="@color/white"
-        fab:fab_addButtonColorPressed="@color/white_pressed"
-        fab:fab_addButtonPlusIconColor="@color/half_black"
-        fab:fab_addButtonSize="mini"
-        fab:fab_addButtonStrokeVisible="false"
+        fab:fab_buttonColorNormal="@color/white"
+        fab:fab_buttonColorPressed="@color/white_pressed"
+        fab:fab_buttonSize="mini"
+        fab:fab_buttonStrokeVisible="false"
         fab:fab_expandDirection="left">
 
         <com.getbase.floatingactionbutton.FloatingActionButton

@@ -49,7 +49,7 @@ public class FloatingActionButton extends ImageButton {
   int mColorDisabled;
   String mTitle;
   @DrawableRes
-  private int mIcon;
+  int mIcon;
   private Drawable mIconDrawable;
   private int mSize;
 

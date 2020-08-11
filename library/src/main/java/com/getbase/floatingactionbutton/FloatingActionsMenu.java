@@ -37,12 +37,13 @@ public class FloatingActionsMenu extends ViewGroup {
   private static final float COLLAPSED_PLUS_ROTATION = 0f;
   private static final float EXPANDED_PLUS_ROTATION = 90f + 45f;
 
-  private int mAddButtonPlusColor;
-  private int mAddButtonColorNormal;
-  private int mAddButtonColorPressed;
-  private int mAddButtonSize;
-  private boolean mAddButtonStrokeVisible;
+  private int mButtonColorNormal;
+  private int mButtonColorPressed;
+  private int mButtonSize;
+  private int mButtonIcon;
+  private boolean mButtonStrokeVisible;
   private int mExpandDirection;
+  private float mExpandRotation;
 
   private int mButtonSpacing;
   private int mLabelsMargin;
@@ -52,7 +53,7 @@ public class FloatingActionsMenu extends ViewGroup {
 
   private AnimatorSet mExpandAnimation = new AnimatorSet().setDuration(ANIMATION_DURATION);
   private AnimatorSet mCollapseAnimation = new AnimatorSet().setDuration(ANIMATION_DURATION);
-  private AddFloatingActionButton mAddButton;
+  private FloatingActionButton mAddButton;
   private RotatingDrawable mRotatingDrawable;
   private int mMaxButtonWidth;
   private int mMaxButtonHeight;
@@ -92,12 +93,13 @@ public class FloatingActionsMenu extends ViewGroup {
     setTouchDelegate(mTouchDelegateGroup);
 
     TypedArray attr = context.obtainStyledAttributes(attributeSet, R.styleable.FloatingActionsMenu, 0, 0);
-    mAddButtonPlusColor = attr.getColor(R.styleable.FloatingActionsMenu_fab_addButtonPlusIconColor, getColor(android.R.color.white));
-    mAddButtonColorNormal = attr.getColor(R.styleable.FloatingActionsMenu_fab_addButtonColorNormal, getColor(android.R.color.holo_blue_dark));
-    mAddButtonColorPressed = attr.getColor(R.styleable.FloatingActionsMenu_fab_addButtonColorPressed, getColor(android.R.color.holo_blue_light));
-    mAddButtonSize = attr.getInt(R.styleable.FloatingActionsMenu_fab_addButtonSize, FloatingActionButton.SIZE_NORMAL);
-    mAddButtonStrokeVisible = attr.getBoolean(R.styleable.FloatingActionsMenu_fab_addButtonStrokeVisible, true);
+    mButtonColorNormal = attr.getColor(R.styleable.FloatingActionsMenu_fab_buttonColorNormal, getColor(android.R.color.holo_blue_dark));
+    mButtonColorPressed = attr.getColor(R.styleable.FloatingActionsMenu_fab_buttonColorPressed, getColor(android.R.color.holo_blue_light));
+    mButtonIcon = attr.getResourceId(R.styleable.FloatingActionsMenu_fab_buttonIcon, 0);
+    mButtonSize = attr.getInt(R.styleable.FloatingActionsMenu_fab_buttonSize, FloatingActionButton.SIZE_NORMAL);
+    mButtonStrokeVisible = attr.getBoolean(R.styleable.FloatingActionsMenu_fab_buttonStrokeVisible, true);
     mExpandDirection = attr.getInt(R.styleable.FloatingActionsMenu_fab_expandDirection, EXPAND_UP);
+    mExpandRotation = attr.getFloat(R.styleable.FloatingActionsMenu_fab_expandRotation, EXPANDED_PLUS_ROTATION);
     mLabelsStyle = attr.getResourceId(R.styleable.FloatingActionsMenu_fab_labelStyle, 0);
     mLabelsPosition = attr.getInt(R.styleable.FloatingActionsMenu_fab_labelsPosition, LABELS_ON_LEFT_SIDE);
     attr.recycle();
@@ -145,13 +147,13 @@ public class FloatingActionsMenu extends ViewGroup {
   }
 
   private void createAddButton(Context context) {
-    mAddButton = new AddFloatingActionButton(context) {
+    mAddButton = new FloatingActionButton(context) {
       @Override
       void updateBackground() {
-        mPlusColor = mAddButtonPlusColor;
-        mColorNormal = mAddButtonColorNormal;
-        mColorPressed = mAddButtonColorPressed;
-        mStrokeVisible = mAddButtonStrokeVisible;
+        mIcon = mButtonIcon;
+        mColorNormal = mButtonColorNormal;
+        mColorPressed = mButtonColorPressed;
+        mStrokeVisible = mButtonStrokeVisible;
         super.updateBackground();
       }
 
@@ -162,8 +164,8 @@ public class FloatingActionsMenu extends ViewGroup {
 
         final OvershootInterpolator interpolator = new OvershootInterpolator();
 
-        final ObjectAnimator collapseAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", EXPANDED_PLUS_ROTATION, COLLAPSED_PLUS_ROTATION);
-        final ObjectAnimator expandAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", COLLAPSED_PLUS_ROTATION, EXPANDED_PLUS_ROTATION);
+        final ObjectAnimator collapseAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", mExpandRotation, COLLAPSED_PLUS_ROTATION);
+        final ObjectAnimator expandAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", COLLAPSED_PLUS_ROTATION, mExpandRotation);
 
         collapseAnimator.setInterpolator(interpolator);
         expandAnimator.setInterpolator(interpolator);
@@ -176,7 +178,7 @@ public class FloatingActionsMenu extends ViewGroup {
     };
 
     mAddButton.setId(R.id.fab_expand_menu_button);
-    mAddButton.setSize(mAddButtonSize);
+    mAddButton.setSize(mButtonSize);
     mAddButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -599,7 +601,7 @@ public class FloatingActionsMenu extends ViewGroup {
       mTouchDelegateGroup.setEnabled(mExpanded);
 
       if (mRotatingDrawable != null) {
-        mRotatingDrawable.setRotation(mExpanded ? EXPANDED_PLUS_ROTATION : COLLAPSED_PLUS_ROTATION);
+        mRotatingDrawable.setRotation(mExpanded ? mExpandRotation : COLLAPSED_PLUS_ROTATION);
       }
 
       super.onRestoreInstanceState(savedState.getSuperState());
