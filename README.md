@@ -27,7 +27,7 @@ Just add the dependency to your `build.gradle`:
 
 ```groovy
 dependencies {
-    compile 'com.getbase:floatingactionbutton:1.10.1'
+    implementation 'com.github.nic562:android-floating-action-button:1.10.2'
 }
 ```
 
